@@ -129,7 +129,7 @@ namespace chessGraphics
             
             this.SuspendLayout();
 
-            lblCurrentPlayer.Text = isCurPlWhite ? "Black" : "White";
+            lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
 
             for (i = 0; i < BOARD_SIZE; i++)
             {
@@ -291,7 +291,7 @@ namespace chessGraphics
                     else if (res.ToLower().StartsWith("valid"))
                     {
                         isCurPlWhite = !isCurPlWhite;
-                        lblCurrentPlayer.Text = isCurPlWhite ? "Black" : "White";
+                        lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
 
                         matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                         matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
