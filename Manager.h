@@ -7,6 +7,9 @@
 #define WHITE_PLAYER 0
 #define BLACK_PLAYER 1
 #define PLAYER_COUNT 2
+#define DELAY 5000
+#define TRY_AGAIN "0"
+#define INIT_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"//the board
 
 #define ROW_INDEX 1
 #define COLUM_INDEX 0
@@ -162,7 +165,7 @@ public:
 	output: none
 	description: this is handling the graphics gamemode basic graphics moves etc..
 	*/
-	void handleGraphicsMode(Pipe& pipe, const bool isMulti);
+	void handleGraphicsMode(Pipe& pipe);
 
 	/*
 	name: handleMulti

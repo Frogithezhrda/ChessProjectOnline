@@ -10,12 +10,9 @@ in order to read and write information from and to the Backend
 #include "Manager.h"
 
 #define BUFFER 1024
-#define DELAY 5000
 #define CONSOLE 'c'
 #define GRAPHICS 'g'
 #define MULTI 'm'
-#define INIT_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"//the board
-#define TRY_AGAIN "0"
 
 /*
 	name: handlemaingame
@@ -109,6 +106,6 @@ void handleGraphics(Manager* manager, const bool isMulti)
 	strcpy_s(msgToGraphics, INIT_STRING); // just example...
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 	// get message from graphics
-	manager->handleGraphicsMode(p, isMulti);
+	manager->handleGraphicsMode(p);
 	p.close();
 }
