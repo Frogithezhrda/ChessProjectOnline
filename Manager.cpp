@@ -79,6 +79,11 @@ void Manager::handleMulti()
 			{
 				// get message from graphics
 				msgFromGraphics = p.getMessageFromGraphics();
+				if (msgFromGraphics == QUIT)
+				{
+					socket.closeSocket();  // Close the socket when done
+					return;
+				}
 				handleConsole(msgFromGraphics);
 				printTurn();
 				this->_board->printBoard();
