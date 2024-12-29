@@ -82,9 +82,9 @@ void handleGraphics(Manager* manager, const bool isMulti)
 	char msgToGraphics[BUFFER];
 	//starting the graphic.exe if its in the same folder
 	std::cout << "Starting Graphics.exe Just Put It In The Same Folder As The Game" << std::endl;//starting  graphics
-	//system("start chessGraphics.exe");
+	system("start chessGraphics.exe");
 
-	while (!isConnect)//if graphics dident connect
+	while (!isConnect) //if graphics dident connect
 	{
 		std::cout << "cant connect to graphics" << std::endl;
 		std::cout << "Do you try to connect again or exit? (0-try again, 1-exit)" << std::endl;
