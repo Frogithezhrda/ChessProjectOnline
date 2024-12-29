@@ -97,7 +97,7 @@ namespace chessGraphics
 
             byte[] inBuffer = new byte[1024];
             ioStream.Read(inBuffer, 0, 1024);
-            
+
             String MyString = Encoding.ASCII.GetString(inBuffer).TrimEnd((Char)0);
             return Encoding.ASCII.GetString(inBuffer).TrimEnd((Char)0);
         }

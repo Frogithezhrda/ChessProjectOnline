@@ -25,86 +25,36 @@ void Manager::handleGraphicsMode(Pipe& pipe)
 void Manager::handleMulti()
 {
 	Socket socket;
-	std::string msgFromGraphics = "";
+	std::string move = "";
 	std::string ip = "";
-	std::string color = "";
-	bool isConnect = false;
-	std::string ans = "";
-	char msgToGraphics[BUFFER];
-	Pipe p;
 	std::cout << "Server IP: ";
 	std::cin >> ip;
-
-	if (socket.connectToServer(ip, PORT))  // connecting to local server on port 8000
+	if (socket.connectToServer(ip, PORT))  // Connecting to local server on port 8000
 	{
-		//starting the graphic.exe if its in the same folder
-		std::cout << "Starting Graphics.exe Just Put It In The Same Folder As The Game" << std::endl;//starting  graphics
-		system("start chessGraphics.exe");
-
-		while (!isConnect) //if graphics dident connect
-		{
-			std::cout << "cant connect to graphics" << std::endl;
-			std::cout << "Do you try to connect again or exit? (0-try again, 1-exit)" << std::endl;
-			std::cin >> ans;
-
-			if (ans == TRY_AGAIN)//if they wanted to try again
-			{
-				std::cout << "trying connect again.." << std::endl;
-				Sleep(DELAY);
-				isConnect = p.connect();
-			}
-			else //if they dednt, close the pipe
-			{
-				p.close();
-				return;
-			}
-		}
 		std::cout << "Waiting to Receive Color.." << std::endl;
-		color = socket.receiveData();
-		strcpy_s(msgToGraphics, INIT_STRING); // just example...
-		p.sendMessageToGraphics(msgToGraphics);   // send the board string
-
-		while (msgFromGraphics != QUIT)
+		std::string color = socket.receiveData();
+		while (move != QUIT)
 		{
 			if (color[0] == BLACK)
 			{
-				msgFromGraphics = socket.receiveData();
-				handleConsole(msgFromGraphics);
-				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
-				// return result to graphics		
-				p.sendMoveToGraphics(msgFromGraphics);
-				p.sendMessageToGraphics(msgToGraphics);
+				move = socket.receiveData();
+				handleConsole(move);
 			}
 			do
 			{
-				// get message from graphics
-				msgFromGraphics = p.getMessageFromGraphics();
-				if (msgFromGraphics == QUIT)
-				{
-					socket.closeSocket();  // Close the socket when done
-					return;
-				}
-				handleConsole(msgFromGraphics);
 				printTurn();
 				this->_board->printBoard();
-				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
-				// return result to graphics		
-				p.sendMessageToGraphics(msgToGraphics);
+				std::cout << "Enter your move or type 'quit' to exit: ";
+				std::cin >> move; //players input
+				handleConsole(move);
 			} while (_errorCode != CheckMove && _errorCode != GoodMove);
-			socket.sendData(msgFromGraphics);
+			socket.sendData(move);
 			printTurn();
 			this->_board->printBoard();
-			msgFromGraphics = socket.receiveData();
-			handleConsole(msgFromGraphics);
-			printTurn();
-			this->_board->printBoard();
-			strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
-			// return result to graphics		
-			p.sendMoveToGraphics(msgFromGraphics);
-			p.sendMessageToGraphics(msgToGraphics);
-			// get message from graphics
-			msgFromGraphics = p.getMessageFromGraphics();
+			move = socket.receiveData();
+			handleConsole(move);
 		}
+
 		socket.closeSocket();  // Close the socket when done
 	}
 	else

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChessProject", "ChessProject.vcxproj", "{D576BAE5-ADAA-4876-8083-D9B236F28466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chessGraphics", "..\..\..\Downloads\chessGraphics (1)\chessGraphics\chessGraphics\chessGraphics.csproj", "{E78FEB68-FB29-42FD-B780-FFF1D04E7AAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chessGraphics", "chessGraphics\chessGraphics\chessGraphics.csproj", "{E78FEB68-FB29-42FD-B780-FFF1D04E7AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
