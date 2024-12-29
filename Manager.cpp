@@ -85,7 +85,7 @@ void Manager::handleMulti()
 				// return result to graphics		
 				p.sendMessageToGraphics(msgToGraphics);
 			} while (_errorCode != CheckMove && _errorCode != GoodMove);
-			socket.sendData(msgToGraphics);
+			socket.sendData(msgFromGraphics);
 			printTurn();
 			this->_board->printBoard();
 			msgFromGraphics = socket.receiveData();
