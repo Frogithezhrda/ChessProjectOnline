@@ -35,12 +35,8 @@ void Manager::handleMulti()
 	std::cout << "Server IP: ";
 	std::cin >> ip;
 
-	strcpy_s(msgToGraphics, INIT_STRING); // just example...
-	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 	if (socket.connectToServer(ip, PORT))  // connecting to local server on port 8000
 	{
-		std::cout << "Waiting to Receive Color.." << std::endl;
-		color = socket.receiveData();
 		//starting the graphic.exe if its in the same folder
 		std::cout << "Starting Graphics.exe Just Put It In The Same Folder As The Game" << std::endl;//starting  graphics
 		system("start chessGraphics.exe");
@@ -63,6 +59,11 @@ void Manager::handleMulti()
 				return;
 			}
 		}
+		strcpy_s(msgToGraphics, INIT_STRING); // just example...
+		p.sendMessageToGraphics(msgToGraphics);   // send the board string
+		msgFromGraphics = p.getMessageFromGraphics();
+		std::cout << "Waiting to Receive Color.." << std::endl;
+		color = socket.receiveData();
 		while (msgFromGraphics != QUIT)
 		{
 			if (color[0] == BLACK)
@@ -74,12 +75,12 @@ void Manager::handleMulti()
 			{
 				printTurn();
 				this->_board->printBoard();
-				handleConsole(msgFromGraphics);
 				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
 				// return result to graphics		
 				p.sendMessageToGraphics(msgToGraphics);
 				// get message from graphics
 				msgFromGraphics = p.getMessageFromGraphics();
+				handleConsole(msgFromGraphics);
 			} while (_errorCode != CheckMove && _errorCode != GoodMove);
 			socket.sendData(msgToGraphics);
 			printTurn();
