@@ -15,7 +15,7 @@ void Manager::handleGraphicsMode(Pipe& pipe)
 			printTurn();
 			this->_board->printBoard();
 			strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
-			// return result to graphics		
+			// return result to graphics
 			pipe.sendMessageToGraphics(msgToGraphics);
 			// get message from graphics
 			msgFromGraphics = pipe.getMessageFromGraphics();
@@ -72,6 +72,7 @@ void Manager::handleMulti()
 				handleConsole(msgFromGraphics);
 				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
 				// return result to graphics		
+				p.sendMoveToGraphics(msgFromGraphics);
 				p.sendMessageToGraphics(msgToGraphics);
 			}
 			do
@@ -94,6 +95,7 @@ void Manager::handleMulti()
 			this->_board->printBoard();
 			strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
 			// return result to graphics		
+			p.sendMoveToGraphics(msgFromGraphics);
 			p.sendMessageToGraphics(msgToGraphics);
 			// get message from graphics
 			msgFromGraphics = p.getMessageFromGraphics();

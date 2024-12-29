@@ -148,6 +148,34 @@ public:
 
 	}
 
+	bool sendMoveToGraphics(std::string move)
+	{
+		const char* chRequest = move.c_str();	// Client -> Server
+		DWORD cbBytesWritten, cbRequestBytes;
+
+		// Send one message to the pipe.
+		cbRequestBytes = sizeof(TCHAR) * (lstrlen((chRequest)) + 1);
+
+		BOOL bResult = WriteFile(			// Write to the pipe.
+			hPipe,						// Handle of the pipe
+			chRequest,					// Message to be written
+			cbRequestBytes,				// Number of bytes to write
+			&cbBytesWritten,			// Number of bytes written
+			NULL);						// Not overlapped 
+
+		if (!bResult/*Failed*/ || cbRequestBytes != cbBytesWritten/*Failed*/)
+		{
+			_tprintf(_T("WriteFile failed w/err 0x%08lx\n"), GetLastError());
+			return false;
+		}
+
+		_tprintf(_T("Sends %ld bytes; Message: \"%s\"\n"),
+			cbBytesWritten, chRequest);
+
+		return true;
+
+	}
+
 	void close()
 	{
 		CloseHandle(hPipe);
