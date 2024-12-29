@@ -63,12 +63,16 @@ void Manager::handleMulti()
 		color = socket.receiveData();
 		strcpy_s(msgToGraphics, INIT_STRING); // just example...
 		p.sendMessageToGraphics(msgToGraphics);   // send the board string
+
 		while (msgFromGraphics != QUIT)
 		{
 			if (color[0] == BLACK)
 			{
 				msgFromGraphics = socket.receiveData();
 				handleConsole(msgFromGraphics);
+				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
+				// return result to graphics		
+				p.sendMessageToGraphics(msgToGraphics);
 			}
 			do
 			{
