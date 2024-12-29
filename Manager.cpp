@@ -59,11 +59,10 @@ void Manager::handleMulti()
 				return;
 			}
 		}
-		strcpy_s(msgToGraphics, INIT_STRING); // just example...
-		p.sendMessageToGraphics(msgToGraphics);   // send the board string
-		msgFromGraphics = p.getMessageFromGraphics();
 		std::cout << "Waiting to Receive Color.." << std::endl;
 		color = socket.receiveData();
+		strcpy_s(msgToGraphics, INIT_STRING); // just example...
+		p.sendMessageToGraphics(msgToGraphics);   // send the board string
 		while (msgFromGraphics != QUIT)
 		{
 			if (color[0] == BLACK)
@@ -73,14 +72,14 @@ void Manager::handleMulti()
 			}
 			do
 			{
+				// get message from graphics
+				msgFromGraphics = p.getMessageFromGraphics();
+				handleConsole(msgFromGraphics);
 				printTurn();
 				this->_board->printBoard();
 				strcpy_s(msgToGraphics, std::to_string(getErrorCode()).c_str()); // msgToGraphics should contain the result of the operation
 				// return result to graphics		
 				p.sendMessageToGraphics(msgToGraphics);
-				// get message from graphics
-				msgFromGraphics = p.getMessageFromGraphics();
-				handleConsole(msgFromGraphics);
 			} while (_errorCode != CheckMove && _errorCode != GoodMove);
 			socket.sendData(msgToGraphics);
 			printTurn();
